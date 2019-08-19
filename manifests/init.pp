@@ -31,11 +31,22 @@
 # === Authors
 #
 # Kris Buytaert <Kris.Buytaert@gmail.com>
+# Update: Frederic Lauret <masterlf@msn.com>
 #
 #
-class pagerduty {
-
+class pagerduty (
+  String $servicekey      = $::pagerduty::params::servicekey,
+  String $icinga_cfg_path = $::pagerduty::params::icinga_cfg_path,
+  String $icinga_user     = $::pagerduty::params::icinga_user,
+  String $icinga_group    = $::pagerduty::params::icinga_group,
+) inherits pagerduty::params {
 
   include pagerduty::package
-  include pagerduty::config
+
+  class { 'pagerduty::config':
+    servicekey      => $servicekey,
+    icinga_cfg_path => $icinga_cfg_path,
+    icinga_user     => $icinga_user,
+    icinga_group    => $icinga_group,
+  }
 }
