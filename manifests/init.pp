@@ -43,9 +43,14 @@ class pagerduty (
   String $icinga_cfg_path              = $::pagerduty::params::icinga_cfg_path,
   String $icinga_user                  = $::pagerduty::params::icinga_user,
   String $icinga_group                 = $::pagerduty::params::icinga_group,
+  String $command_file                 = $::pagerduty::params::command_file,
+  String $status_file                  = $::pagerduty::params::status_file,
+  String $manage_packages              = $::pagerduty::params::manage_packages,
 ) inherits pagerduty::params {
 
-  include pagerduty::package
+  class { 'pagerduty::package':
+    manage_packages => $manage_packages,
+  }
 
   class { 'pagerduty::config':
     servicekey                   => $servicekey,
@@ -56,5 +61,7 @@ class pagerduty (
     icinga_cfg_path              => $icinga_cfg_path,
     icinga_user                  => $icinga_user,
     icinga_group                 => $icinga_group,
+    command_file                 => $command_file,
+    status_file                  => $status_file,
   }
 }

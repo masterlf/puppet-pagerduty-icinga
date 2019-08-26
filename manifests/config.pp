@@ -13,7 +13,10 @@ class pagerduty::config (
   String $icinga_cfg_path              = $::pagerduty::params::icinga_cfg_path,
   String $icinga_user                  = $::pagerduty::params::icinga_user,
   String $icinga_group                 = $::pagerduty::params::icinga_group,
+  String $command_file                 = $::pagerduty::params::command_file,
+  String $status_file                  = $::pagerduty::params::status_file,
 ) inherits pagerduty::params {
+  $mon = $facts['monitoring_system']
 
   file {"${icinga_cfg_path}/objects/pagerduty_icinga.cfg":
     ensure  => present,
@@ -22,17 +25,25 @@ class pagerduty::config (
     group   => $icinga_group,
   }
 
-  file {'/usr/local/bin/pagerduty_icinga.pl':
-    ensure => present,
-    source => 'puppet:///modules/pagerduty/pagerduty_icinga.pl',
-    owner  => $icinga_user,
-    group  => $icinga_group,
-    mode   => '0755',
+  file {"/usr/lib/${mon}/pagerduty.pl":
+    ensure  => present,
+    content => template('pagerduty/pagerduty.pl.erb'),
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0755',
+  }
+
+  file {"/usr/lib/cgi-bin/${mon}/pagerduty.cgi":
+    ensure  => present,
+    content => template('pagerduty/pagerduty.cgi.erb'),
+    owner   => $icinga_user,
+    group   => $icinga_group,
+    mode    => '0755',
   }
 
   cron {'pagerduty':
     ensure  => present,
     user    => $icinga_user,
-    command => '/usr/local/bin/pagerduty_icinga.pl flush',
+    command => "/usr/lib/${mon}/pagerduty.pl flush",
   }
 }

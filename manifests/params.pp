@@ -3,14 +3,28 @@
 # @example
 #   inherits pagerduty::params
 #
-class pagerduty::params (
-  String $servicekey                   = '',
-  String $service_notification_period  = '24x7',
-  String $host_notification_period     = '24x7',
-  String $service_notification_options = 'w,u,c,r,f',
-  String $host_notification_options    = 'd,u,r,f',
-  String $icinga_cfg_path              = '/etc/icinga',
-  String $icinga_user                  = 'icinga',
-  String $icinga_group                 = 'icinga',
-){
+class pagerduty::params {
+  $servicekey                   = ''
+  $service_notification_period  = '24x7'
+  $host_notification_period     = '24x7'
+  $service_notification_options = 'w,u,c,r,f'
+  $host_notification_options    = 'd,u,r,f'
+  $icinga_cfg_path              = '/etc/icinga'
+  $icinga_user                  = 'icinga'
+  $icinga_group                 = 'icinga'
+  $manage_packages              = 'yes'
+
+  case $fact['monitoring_system'] {
+    icinga: {
+      $command_file = '/var/spool/icinga/cmd/icinga.cmd'
+      $status_file  = '/var/spool/icinga/status.dat'
+    }
+    nagios: {
+      $command_file = '/var/lib/nagios3/rw/nagios.cmd'
+      $status_file  = '/var/cache/nagios3/status.dat'
+    }
+    default: {
+      notify {'Monitoring is not detected !': }
+    }
+  }
 }
