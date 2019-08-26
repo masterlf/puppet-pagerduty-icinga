@@ -4,6 +4,6 @@
 #   include pagerduty::package
 class pagerduty::package {
   #install packages if not present
-  if ! defined(Package['perl-libwww-perl']) {package {'perl-libwww-perl': ensure => present }}
-  if ! defined(Package['perl-Crypt-SSLeay']) {package {'perl-Crypt-SSLeay': ensure => present }}
+  if ! defined(Package['libwww-perl']) {package {'libwww-perl': ensure => present }}
+  if ! defined(Package['libcrypt-ssleay-perl']) {package {'libcrypt-ssleay-perl': ensure => present }}
 }
