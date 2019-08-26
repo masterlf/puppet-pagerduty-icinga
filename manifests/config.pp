@@ -5,10 +5,14 @@
 # @example
 #   include pagerduty::config
 class pagerduty::config (
-  String $servicekey      = $::pagerduty::params::servicekey,
-  String $icinga_cfg_path = $::pagerduty::params::icinga_cfg_path,
-  String $icinga_user     = $::pagerduty::params::icinga_user,
-  String $icinga_group    = $::pagerduty::params::icinga_group,
+  String $servicekey                   = $::pagerduty::params::servicekey,
+  String $service_notification_period  = $::pagerduty::params::service_notification_period,
+  String $host_notification_period     = $::pagerduty::params::host_notification_period,
+  String $service_notification_options = $::pagerduty::params::service_notification_options,
+  String $host_notification_options    = $::pagerduty::params::host_notification_options,
+  String $icinga_cfg_path              = $::pagerduty::params::icinga_cfg_path,
+  String $icinga_user                  = $::pagerduty::params::icinga_user,
+  String $icinga_group                 = $::pagerduty::params::icinga_group,
 ) inherits pagerduty::params {
 
   file {"${icinga_cfg_path}/objects/pagerduty_icinga.cfg":

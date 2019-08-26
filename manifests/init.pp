@@ -35,18 +35,26 @@
 #
 #
 class pagerduty (
-  String $servicekey      = $::pagerduty::params::servicekey,
-  String $icinga_cfg_path = $::pagerduty::params::icinga_cfg_path,
-  String $icinga_user     = $::pagerduty::params::icinga_user,
-  String $icinga_group    = $::pagerduty::params::icinga_group,
+  String $servicekey                   = $::pagerduty::params::servicekey,
+  String $service_notification_period  = $::pagerduty::params::service_notification_period,
+  String $host_notification_period     = $::pagerduty::params::host_notification_period,
+  String $service_notification_options = $::pagerduty::params::service_notification_options,
+  String $host_notification_options    = $::pagerduty::params::host_notification_options,
+  String $icinga_cfg_path              = $::pagerduty::params::icinga_cfg_path,
+  String $icinga_user                  = $::pagerduty::params::icinga_user,
+  String $icinga_group                 = $::pagerduty::params::icinga_group,
 ) inherits pagerduty::params {
 
   include pagerduty::package
 
   class { 'pagerduty::config':
-    servicekey      => $servicekey,
-    icinga_cfg_path => $icinga_cfg_path,
-    icinga_user     => $icinga_user,
-    icinga_group    => $icinga_group,
+    servicekey                   => $servicekey,
+    service_notification_period  => $service_notification_period,
+    host_notification_period     => $host_notification_period,
+    service_notification_options => $service_notification_options,
+    host_notification_options    => $host_notification_options,
+    icinga_cfg_path              => $icinga_cfg_path,
+    icinga_user                  => $icinga_user,
+    icinga_group                 => $icinga_group,
   }
 }
