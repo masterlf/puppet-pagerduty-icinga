@@ -14,7 +14,7 @@ class pagerduty::params {
   $icinga_group                 = 'icinga'
   $manage_packages              = 'yes'
 
-  case $fact['monitoring_system'] {
+  case $facts['monitoring_system'] {
     icinga: {
       $command_file = '/var/spool/icinga/cmd/icinga.cmd'
       $status_file  = '/var/spool/icinga/status.dat'
