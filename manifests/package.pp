@@ -7,6 +7,6 @@ class pagerduty::package (
   ){
   #install packages if not present
   if $manage_packages == 'yes' {
-    ensure_packages(['libwww-perl', 'libcrypt-ssleay-perl'], {'ensure' => 'present'})
+    ensure_packages(['libwww-perl', 'libjson-perl'], {'ensure' => 'present'})
   }
 }
