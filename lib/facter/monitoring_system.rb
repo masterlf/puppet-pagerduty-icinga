@@ -4,7 +4,7 @@ Facter.add(:monitoring_system) do
       if File.exist? "/etc/icinga"
          result = "icinga"
          result
-      else if File.exist? "/etc/nagios3"
+      elsif File.exist? "/etc/nagios3"
          result = "nagios"
          result
       end
