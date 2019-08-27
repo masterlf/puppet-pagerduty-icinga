@@ -15,6 +15,9 @@ class pagerduty::config (
   String $icinga_group                 = $::pagerduty::params::icinga_group,
   String $command_file                 = $::pagerduty::params::command_file,
   String $status_file                  = $::pagerduty::params::status_file,
+  String $use_proxy                    = $::pagerduty::params::use_proxy,
+  String $proxy_proto                  = $::pagerduty::params::proxy_proto,
+  String $proxy                        = $::pagerduty::params::proxy,
 ) inherits pagerduty::params {
   $mon = $facts['monitoring_system']
 

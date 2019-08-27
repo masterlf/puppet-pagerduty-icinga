@@ -46,6 +46,9 @@ class pagerduty (
   String $command_file                 = $::pagerduty::params::command_file,
   String $status_file                  = $::pagerduty::params::status_file,
   String $manage_packages              = $::pagerduty::params::manage_packages,
+  String $use_proxy                    = $::pagerduty::params::use_proxy,
+  String $proxy_proto                  = $::pagerduty::params::proxy_proto,
+  String $proxy                        = $::pagerduty::params::proxy,
 ) inherits pagerduty::params {
 
   class { 'pagerduty::package':
@@ -63,5 +66,8 @@ class pagerduty (
     icinga_group                 => $icinga_group,
     command_file                 => $command_file,
     status_file                  => $status_file,
+    use_proxy                    => $use_proxy,
+    proxy_proto                  => $proxy_proto,
+    proxy                        => $proxy,
   }
 }

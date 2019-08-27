@@ -13,6 +13,9 @@ class pagerduty::params {
   $icinga_user                  = 'icinga'
   $icinga_group                 = 'icinga'
   $manage_packages              = 'yes'
+  $use_proxy                    = 'no'
+  $proxy_proto                  = 'https'
+  $proxy                        = ''
 
   case $facts['monitoring_system'] {
     icinga: {
