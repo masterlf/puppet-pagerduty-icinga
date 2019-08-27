@@ -10,9 +10,9 @@ class pagerduty::config (
   String $host_notification_period     = $::pagerduty::params::host_notification_period,
   String $service_notification_options = $::pagerduty::params::service_notification_options,
   String $host_notification_options    = $::pagerduty::params::host_notification_options,
-  String $icinga_cfg_path              = $::pagerduty::params::icinga_cfg_path,
-  String $icinga_user                  = $::pagerduty::params::icinga_user,
-  String $icinga_group                 = $::pagerduty::params::icinga_group,
+  String $monitoring_cfg_path          = $::pagerduty::params::monitoring_cfg_path,
+  String $monitoring_user              = $::pagerduty::params::monitoring_user,
+  String $monitoring_group             = $::pagerduty::params::monitoring_group,
   String $command_file                 = $::pagerduty::params::command_file,
   String $status_file                  = $::pagerduty::params::status_file,
   String $use_proxy                    = $::pagerduty::params::use_proxy,
@@ -21,32 +21,32 @@ class pagerduty::config (
 ) inherits pagerduty::params {
   $mon = $facts['monitoring_system']
 
-  file {"${icinga_cfg_path}/objects/pagerduty_icinga.cfg":
+  file {"${monitoring_cfg_path}/objects/pagerduty.cfg":
     ensure  => present,
-    content => template('pagerduty/pagerduty_icinga.cfg.erb'),
-    owner   => $icinga_user,
-    group   => $icinga_group,
+    content => template('pagerduty/pagerduty.cfg.erb'),
+    owner   => $monitoring_user,
+    group   => $monitoring_group,
   }
 
   file {"/usr/lib/${mon}/pagerduty.pl":
     ensure  => present,
     content => template('pagerduty/pagerduty.pl.erb'),
-    owner   => $icinga_user,
-    group   => $icinga_group,
+    owner   => $monitoring_user,
+    group   => $monitoring_group,
     mode    => '0755',
   }
 
   file {'/usr/lib/cgi-bin/pagerduty.cgi':
     ensure  => present,
     content => template('pagerduty/pagerduty.cgi.erb'),
-    owner   => $icinga_user,
-    group   => $icinga_group,
+    owner   => $monitoring_user,
+    group   => $monitoring_group,
     mode    => '0755',
   }
 
   cron {'pagerduty':
     ensure  => present,
-    user    => $icinga_user,
+    user    => $monitoring_user,
     command => "/usr/lib/${mon}/pagerduty.pl flush",
   }
 }

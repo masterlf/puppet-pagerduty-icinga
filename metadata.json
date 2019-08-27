@@ -2,37 +2,13 @@
   "name": "masterlf-pagerduty",
   "version": "0.2.0",
   "author": "Frederic Lauret",
-  "summary": "Pagerduty update",
+  "summary": "install Pagerduty API based on pd-nag-connector",
   "license": "Apache-2.0",
   "source": "",
   "dependencies": [
-
+    { "name":"puppetlabs/stdlib","version_requirement":">= 4.1.0 < 6.0.0"}
   ],
   "operatingsystem_support": [
-    {
-      "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "OracleLinux",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "RedHat",
-      "operatingsystemrelease": [
-        "8"
-      ]
-    },
-    {
-      "operatingsystem": "Scientific",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
@@ -42,9 +18,15 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
+        "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
         "18.04"
       ]
-    }
+    },
   ],
   "requirements": [
     {
