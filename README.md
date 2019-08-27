@@ -34,6 +34,7 @@ The module will deploy the perl and cgi files needed and will configure them. It
 
 It is possible to configure the class with the following parameter:
 
+```
 class { 'pagerduty':
   servicekey                   => 'pagerduty API key',
   service_notification_period  => '24x7',
@@ -50,6 +51,9 @@ class { 'pagerduty':
   proxy_proto                  => 'https',
   proxy                        => 'https://yourproxy:port',
 }
+```
+
+Review the default parameter in params.pp to see if anything need to be configured differently.
 
 ## Reference
 
