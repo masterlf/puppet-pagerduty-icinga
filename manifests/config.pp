@@ -36,7 +36,7 @@ class pagerduty::config (
     mode    => '0755',
   }
 
-  file {"/usr/lib/cgi-bin/${mon}/pagerduty.cgi":
+  file {'/usr/lib/cgi-bin/pagerduty.cgi':
     ensure  => present,
     content => template('pagerduty/pagerduty.cgi.erb'),
     owner   => $icinga_user,
