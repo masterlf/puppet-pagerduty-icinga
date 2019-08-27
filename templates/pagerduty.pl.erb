@@ -261,7 +261,7 @@ my ($useragent, $response);
 $useragent = LWP::UserAgent->new ();
 
 <%# Proxy integration %>
-<% if use_proxy == 'yes' -%>
+<% if @use_proxy == 'yes' -%>
 $useragent->timeout(15);
 $useragent->proxy(<% @proxy_proto %> =>'<% @proxy %>');
 <% end -%>
