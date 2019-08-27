@@ -263,7 +263,7 @@ $useragent = LWP::UserAgent->new ();
 <%# Proxy integration %>
 <% if @use_proxy == 'yes' -%>
 $useragent->timeout(15);
-$useragent->proxy(<% @proxy_proto %> =>'<% @proxy %>');
+$useragent->proxy(<%= @proxy_proto %> =>'<%= @proxy %>');
 <% end -%>
 
 $response = $useragent->post (
