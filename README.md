@@ -1,8 +1,5 @@
 # pager_duty_icinga
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
 
 #### Table of Contents
 
@@ -10,78 +7,62 @@ The README template below provides a starting point with details about what info
 2. [Setup - The basics of getting started with pager_duty_icinga](#setup)
     * [What pager_duty_icinga affects](#what-pager_duty_icinga-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with pager_duty_icinga](#beginning-with-pager_duty_icinga)
 3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for contributing to the module](#development)
+4. [Reference](#Reference)
+5. [Limitations - OS compatibility, etc.](#limitations)
+6. [Development - Guide for contributing to the module](#development)
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
+This Module automatise the deployment of pd-nag-connector API for Pagerduty
 
-This should be a fairly short description helps the user decide if your module is what they want.
+pd-nag-connector is available at https://github.com/jeffwalter/pd-nag-connector
+The origin of this module is available at https://github.com/KrisBuytaert/puppet-pagerduty-icinga
 
 ## Setup
 
-### What pager_duty_icinga affects **OPTIONAL**
+### What pager_duty_icinga affects
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
+The module will deploy the perl and cgi files needed and will configure them. It will also deploy the packages needed by perl.
 
-If there's more that they should know about, though, this is the place to mention:
+### Setup requirements
 
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with pager_duty_icinga
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+* This module require puppetlabs/stdlib
+* A Pagerduty API key is needed.
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+It is possible to configure the class with the following parameter:
+
+class { 'pagerduty':
+  servicekey                   => 'pagerduty API key',
+  service_notification_period  => '24x7',
+  host_notification_period     => '24x7',
+  service_notification_options => 'w,u,c,r,f',
+  host_notification_options    => 'd,u,r,f',
+  monitoring_cfg_path          => '/path',
+  monitoring_user              => 'icinga_user',
+  monitoring_group             => 'icinga_group',
+  command_file                 => '/path/command_file',
+  status_file                  => '/path/status_file',
+  manage_packages              => 'yes',
+  use_proxy                    => 'no',
+  proxy_proto                  => 'https',
+  proxy                        => 'https://yourproxy:port',
+}
 
 ## Reference
 
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
+You can find additional information [about pd-nag-connector](https://github.com/jeffwalter/pd-nag-connector)
+You will complete your information with [Pagerduty support](https://www.pagerduty.com/docs/guides/icinga-integration-guide/) and the [Pagerduty webhook behavior](https://v2.developer.pagerduty.com/docs/webhook-behavior)
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+* Should work only on debian/ubuntu (tested on ubuntu 16.04)
+* Tested only with icinga 1.x but should work with nagios too
+* Webserver configuration is not included in this module
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+* TODO: apache conf.d section to configure apache and allow /cgi-bin/pagerduty.cgi
+Feel free to contribute
